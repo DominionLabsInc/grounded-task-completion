@@ -5,8 +5,8 @@ not when a procedure returns success.**
 
 Stefan Ragland, Dominion Labs Research & Development. Published 14 October 2025.
 
-- Paper: <https://dmnlabs.org/research/grounded-task-completion/>
-- Paper (offline copy): [`paper/grounded-task-completion.html`](paper/grounded-task-completion.html)
+- Paper (PDF): [`paper/grounded-task-completion.pdf`](paper/grounded-task-completion.pdf)
+- Paper (web): <https://dmnlabs.org/research/grounded-task-completion/>
 - Contact: research@dmnlabs.org
 
 ## The argument
