@@ -164,7 +164,7 @@ table.data,.data-wrap{break-inside:avoid;page-break-inside:avoid}
 <p>All measurements below are of the mechanism's own behavior on a fixed world; see &#167;7 for an important scope limitation.</p>
 
 <h3>6.1&ensp;One confirmation is not enough</h3>
-<figure><div class="chart-title">Only independent action-plus-observation clears the bar</div><div class="canvas"><svg class="chart" viewBox="0 0 740 340" role="img">
+<figure class="fit"><div class="chart-title">Only independent action-plus-observation clears the bar</div><div class="canvas"><svg class="chart" viewBox="0 0 740 340" role="img">
 <line class="grid" x1="66" y1="294.0" x2="716" y2="294.0"/>
 <text class="tick" x="58" y="298.0" text-anchor="end">0</text>
 <line class="grid" x1="66" y1="238.4" x2="716" y2="238.4"/>
@@ -203,46 +203,46 @@ table.data,.data-wrap{break-inside:avoid;page-break-inside:avoid}
 
 <h3>6.2&ensp;A completion-judgment suite</h3>
 <p>On a fixed suite of nine tasks (five honest actions, one absence goal, and three &#8220;traps&#8221; where a tool reports success without changing the world) the mechanism's posterior separates the two classes cleanly and matches ground truth on all nine.</p>
-<figure><div class="chart-title">Nine tasks: accepted completions vs. correctly rejected traps</div><div class="canvas"><svg class="chart" viewBox="0 0 760 350" role="img">
-<line class="grid" x1="66" y1="304.0" x2="736" y2="304.0"/>
-<text class="tick" x="58" y="308.0" text-anchor="end">0</text>
-<line class="grid" x1="66" y1="246.4" x2="736" y2="246.4"/>
-<text class="tick" x="58" y="250.4" text-anchor="end">0.2</text>
-<line class="grid" x1="66" y1="188.8" x2="736" y2="188.8"/>
-<text class="tick" x="58" y="192.8" text-anchor="end">0.4</text>
-<line class="grid" x1="66" y1="131.2" x2="736" y2="131.2"/>
-<text class="tick" x="58" y="135.2" text-anchor="end">0.6</text>
-<line class="grid" x1="66" y1="73.6" x2="736" y2="73.6"/>
-<text class="tick" x="58" y="77.6" text-anchor="end">0.8</text>
+<figure><div class="chart-title">Nine tasks: accepted completions vs. correctly rejected traps</div><div class="canvas"><svg class="chart" viewBox="0 0 760.0 263.6" role="img">
+<line class="grid" x1="66" y1="217.6" x2="736" y2="217.6"/>
+<text class="tick" x="58" y="221.6" text-anchor="end">0</text>
+<line class="grid" x1="66" y1="177.28" x2="736" y2="177.28"/>
+<text class="tick" x="58" y="180.08" text-anchor="end">0.2</text>
+<line class="grid" x1="66" y1="136.96" x2="736" y2="136.96"/>
+<text class="tick" x="58" y="139.76" text-anchor="end">0.4</text>
+<line class="grid" x1="66" y1="96.64" x2="736" y2="96.64"/>
+<text class="tick" x="58" y="99.44" text-anchor="end">0.6</text>
+<line class="grid" x1="66" y1="56.32" x2="736" y2="56.32"/>
+<text class="tick" x="58" y="59.12" text-anchor="end">0.8</text>
 <line class="grid" x1="66" y1="16.0" x2="736" y2="16.0"/>
-<text class="tick" x="58" y="20.0" text-anchor="end">1</text>
-<line class="axis" x1="66" y1="304" x2="736" y2="304"/>
-<line x1="66" y1="30.4" x2="736" y2="30.4" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.85"/>
-<text x="732" y="25.4" text-anchor="end" style="font-size:11px;fill:var(--accent)">acceptance 0.95</text>
-<text class="axis-label" transform="rotate(-90 16 160)" x="16" y="160" text-anchor="middle">Completion posterior</text>
-<rect class="bar" x="84.6" y="23.2" width="37.2" height="280.8" rx="3" style="fill:var(--s3)"/>
-<text class="tick" x="103.2" y="322" text-anchor="middle">write</text>
-<rect class="bar" x="159.1" y="23.2" width="37.2" height="280.8" rx="3" style="fill:var(--s3)"/>
-<text class="tick" x="177.7" y="322" text-anchor="middle">mkdir</text>
-<rect class="bar" x="233.5" y="23.2" width="37.2" height="280.8" rx="3" style="fill:var(--s3)"/>
-<text class="tick" x="252.1" y="322" text-anchor="middle">copy</text>
-<rect class="bar" x="307.9" y="16.0" width="37.2" height="288.0" rx="3" style="fill:var(--s3)"/>
-<text class="tick" x="326.6" y="322" text-anchor="middle">two-</text>
-<text class="tick" x="326.6" y="335" text-anchor="middle">step</text>
-<rect class="bar" x="382.4" y="23.2" width="37.2" height="280.8" rx="3" style="fill:var(--s3)"/>
-<text class="tick" x="401.0" y="322" text-anchor="middle">delete</text>
-<rect class="bar" x="456.8" y="23.2" width="37.2" height="280.8" rx="3" style="fill:var(--s3)"/>
-<text class="tick" x="475.4" y="322" text-anchor="middle">delete-</text>
-<text class="tick" x="475.4" y="335" text-anchor="middle">absent</text>
-<rect class="bar" x="531.3" y="303.7" width="37.2" height="0.3" rx="3" style="fill:var(--s6)"/>
-<text class="tick" x="549.9" y="322" text-anchor="middle">copy</text>
-<text class="tick" x="549.9" y="335" text-anchor="middle">(no src)</text>
-<rect class="bar" x="605.7" y="303.7" width="37.2" height="0.3" rx="3" style="fill:var(--s6)"/>
-<text class="tick" x="624.3" y="322" text-anchor="middle">write</text>
-<text class="tick" x="624.3" y="335" text-anchor="middle">(blocked)</text>
-<rect class="bar" x="680.2" y="248.6" width="37.2" height="55.4" rx="3" style="fill:var(--s6)"/>
-<text class="tick" x="698.8" y="322" text-anchor="middle">two-step</text>
-<text class="tick" x="698.8" y="335" text-anchor="middle">(2nd fails)</text>
+<text class="tick" x="58" y="18.8" text-anchor="end">1</text>
+<line class="axis" x1="66" y1="217.6" x2="736" y2="217.6"/>
+<line x1="66" y1="26.08" x2="736" y2="26.08" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.85"/>
+<text x="732" y="22.58" text-anchor="end" style="font-size:11px;fill:var(--accent)">acceptance 0.95</text>
+<text class="axis-label" transform="rotate(-90 16 116.8)" x="16" y="116.8" text-anchor="middle">Completion posterior</text>
+<rect class="bar" x="84.6" y="21.04" width="37.2" height="196.56" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="103.2" y="235.6" text-anchor="middle">write</text>
+<rect class="bar" x="159.1" y="21.04" width="37.2" height="196.56" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="177.7" y="235.6" text-anchor="middle">mkdir</text>
+<rect class="bar" x="233.5" y="21.04" width="37.2" height="196.56" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="252.1" y="235.6" text-anchor="middle">copy</text>
+<rect class="bar" x="307.9" y="16.0" width="37.2" height="201.6" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="326.6" y="235.6" text-anchor="middle">two-</text>
+<text class="tick" x="326.6" y="248.6" text-anchor="middle">step</text>
+<rect class="bar" x="382.4" y="21.04" width="37.2" height="196.56" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="401.0" y="235.6" text-anchor="middle">delete</text>
+<rect class="bar" x="456.8" y="21.04" width="37.2" height="196.56" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="475.4" y="235.6" text-anchor="middle">delete-</text>
+<text class="tick" x="475.4" y="248.6" text-anchor="middle">absent</text>
+<rect class="bar" x="531.3" y="217.39" width="37.2" height="0.21" rx="3" style="fill:var(--s6)"/>
+<text class="tick" x="549.9" y="235.6" text-anchor="middle">copy</text>
+<text class="tick" x="549.9" y="248.6" text-anchor="middle">(no src)</text>
+<rect class="bar" x="605.7" y="217.39" width="37.2" height="0.21" rx="3" style="fill:var(--s6)"/>
+<text class="tick" x="624.3" y="235.6" text-anchor="middle">write</text>
+<text class="tick" x="624.3" y="248.6" text-anchor="middle">(blocked)</text>
+<rect class="bar" x="680.2" y="178.82" width="37.2" height="38.78" rx="3" style="fill:var(--s6)"/>
+<text class="tick" x="698.8" y="235.6" text-anchor="middle">two-step</text>
+<text class="tick" x="698.8" y="248.6" text-anchor="middle">(2nd fails)</text>
 </svg></div>
 <figcaption><span class="fnum">Figure 2.</span> Per-task completion posterior. Green: tasks whose goal truly holds (accepted, &#8776;0.975&#8211;0.9999; the two-step task reaches the highest value from four independent groundings). Red: traps whose goal does not hold (rejected, &#8776;0.001&#8211;0.19). The dashed line is the acceptance bar. Summary: 6 correct completions, 3 correct rejections, <em>0 false completions, 0 false incompletions</em>.</figcaption></figure>
 <div class="tbl"><table>
@@ -257,7 +257,7 @@ table.data,.data-wrap{break-inside:avoid;page-break-inside:avoid}
 
 <h3>6.3&ensp;Absence goals under intent polarity</h3>
 <p>The absence case is what makes polarity load-bearing rather than cosmetic. With a presence-only observation channel, &#8220;ensure the file is gone&#8221; scored as a false incompletion. Giving the observation channel goal-polarity, and letting the action's real error (rather than a discarded generic one) inform the intervention evidence, moved the posterior from &#8776;0.01, through a partial fix at &#8776;0.17, to &#8776;0.975.</p>
-<figure><div class="chart-title">An absence goal, from false-incompletion to correct completion</div><div class="canvas"><svg class="chart" viewBox="0 0 740 330" role="img">
+<figure class="fit"><div class="chart-title">An absence goal, from false-incompletion to correct completion</div><div class="canvas"><svg class="chart" viewBox="0 0 740 330" role="img">
 <line class="grid" x1="66" y1="284.0" x2="716" y2="284.0"/>
 <text class="tick" x="58" y="288.0" text-anchor="end">0</text>
 <line class="grid" x1="66" y1="230.4" x2="716" y2="230.4"/>
