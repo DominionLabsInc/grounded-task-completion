@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preload" as="image" href="assets/3.svg" fetchpriority="high">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Completion as an Internal, Grounded Judgment | Dominion Labs</title>
+<meta name="description" content="When is an autonomous agent's task actually done? We make completion a grounded belief that must pass the agent's own doubt, separating what it did from what it independently observed.">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Task Completion as an Internal, Grounded Judgment">
+<meta property="og:description" content="When is an autonomous agent's task actually done? We make completion a grounded belief that must pass the agent's own doubt, separating what it did from what it independently observed.">
+<meta property="og:url" content="https://dmnlabs.org/research/grounded-task-completion/">
+<link rel="stylesheet" href="assets/paper.css">
+<style>
+.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.9em}
+table.data{width:100%;border-collapse:collapse;margin:1.3em 0;font-size:.95em}
+table.data th,table.data td{text-align:left;padding:.5em .7em;border-bottom:1px solid var(--rule);vertical-align:top}
+table.data thead th{font-weight:600;color:var(--fg);border-bottom:2px solid var(--rule)}
+.data-wrap{overflow-x:auto}
+table.data,.data-wrap{break-inside:avoid;page-break-inside:avoid}
+@media print{.skip-link{display:none!important}table.data,.data-wrap{break-inside:avoid;page-break-inside:avoid}}
+</style>
+
+
+    <!-- SEO: canonical, social card, academic citation, structured data -->
+    <link rel="canonical" href="https://dmnlabs.org/research/grounded-task-completion/">
+    <meta name="author" content="Stefan Ragland">
+    <meta property="og:site_name" content="Dominion Labs">
+    <meta property="og:image" content="https://dmnlabs.org/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="article:published_time" content="2025-10-14">
+    <meta property="article:author" content="Stefan Ragland">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Task Completion as an Internal, Grounded Judgment">
+    <meta name="twitter:description" content="When is an autonomous agent's task actually done? We make completion a grounded belief that must pass the agent's own doubt, separating what it did from what it independently observed.">
+    <meta name="twitter:image" content="https://dmnlabs.org/images/og-image.png">
+    <!-- Google Scholar citation tags -->
+    <meta name="citation_title" content="Task Completion as an Internal, Grounded Judgment">
+    <meta name="citation_author" content="Ragland, Stefan">
+    <meta name="citation_publication_date" content="2025/10/14">
+    <meta name="citation_online_date" content="2025/10/14">
+    <meta name="citation_technical_report_institution" content="Dominion Labs">
+    <meta name="citation_publisher" content="Dominion Labs">
+    <meta name="citation_pdf_url" content="https://dmnlabs.org/research/grounded-task-completion.pdf">
+    <meta name="citation_abstract_html_url" content="https://dmnlabs.org/research/grounded-task-completion/">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  "headline": "Task Completion as an Internal, Grounded Judgment",
+  "name": "Task Completion as an Internal, Grounded Judgment",
+  "description": "When is an autonomous agent's task actually done? We make completion a grounded belief that must pass the agent's own doubt, separating what it did from what it independently observed.",
+  "url": "https://dmnlabs.org/research/grounded-task-completion/",
+  "datePublished": "2025-10-14T12:00:00Z",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "Stefan Ragland",
+    "url": "https://www.linkedin.com/in/stefan-ragland-a22215391/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Dominion Labs",
+    "url": "https://dmnlabs.org",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dmnlabs.org/images/1.png"
+    }
+  },
+  "isPartOf": {
+    "@type": "CollectionPage",
+    "name": "Research",
+    "url": "https://dmnlabs.org/research"
+  },
+  "image": "https://dmnlabs.org/images/og-image.png",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://dmnlabs.org/research/grounded-task-completion/"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://dmnlabs.org/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Research",
+      "item": "https://dmnlabs.org/research"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Task Completion as an Internal, Grounded Judgment",
+      "item": "https://dmnlabs.org/research/grounded-task-completion/"
+    }
+  ]
+}
+    </script>
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+<div class="paper-nav"><a href="https://dmnlabs.org/" class="paper-brand" aria-label="Dominion Labs"><img src="assets/3.svg" alt="Dominion Labs" width="338" height="129"></a><a href="https://dmnlabs.org/research">&#8592; Research</a></div>
+<main id="main" class="wrap">
+<header class="paper">
+<div class="eyebrow">Research &#183; Autonomous Agents</div>
+<h1>Task Completion as an Internal, Grounded Judgment</h1>
+<div class="subtitle">Deciding an autonomous agent is done from its own doubt, fresh re-observation, and independent evidence</div>
+<div class="byline">Stefan Ragland</div>
+<div class="byline">Dominion Labs Research &amp; Development</div>
+<div class="affil">Dominion Labs</div>
+<div class="affil"><a href="mailto:research@dmnlabs.org">research@dmnlabs.org</a></div>
+<div class="date">October 14, 2025</div>
+</header>
+
+<div class="abstract">
+<span class="lbl">Abstract</span>
+<p>Autonomous agents that carry out real-world tasks face a deceptively simple question: <em>is the task actually done?</em> The common answer (trust a success flag, a self-report, or an acceptance checker) conflates <em>the agent said it succeeded</em> with <em>the world is now in the intended state</em>. We argue that completion should instead be an internal, grounded judgment: the agent is done only when it <em>believes</em>, past its own calibrated doubt, that the task's goal holds, where that belief is anchored to the goal's intent and formed from the agent's own reasoning and a fresh re-observation of the world. We separate two epistemically distinct kinds of evidence, <em>intervention</em> evidence (&#8220;I acted and the runtime reported an effect,&#8221; DID) and <em>observational</em> evidence (&#8220;I independently re-measured the world and saw the intended state,&#8221; SAW), and combine them under an independence rule so that correlated confirmations of a single observation cannot masquerade as independent proof. Completion is decided by a posterior crossing a doubt-scaled acceptance bar, which structurally forces a fresh, independent observation before any goal is accepted. A single confirmation is insufficient (posterior &#8776;0.72); independent action-plus-observation is accepted (&#8776;0.975); a fabricated success collapses (&#8776;0.30). Treating an <em>absence</em> goal requires giving the observation channel goal-polarity; with that polarity in place, an absence goal that a presence-only channel scores as a false incompletion (&#8776;0.01) is judged correctly complete (&#8776;0.975). Across a fixed completion-judgment suite the mechanism produced <em>zero false completions</em>, including against a tool that reports success while writing nothing. A separate study establishes what becomes of that judgment: the execution path that owns a pursuit closes its intent exactly once and from the re-observed world, including a case where the acting step is internally confirmed and the pursuit nonetheless closes as missed because the world does not agree, and a case where a refused action still closes its pursuit rather than leaving an intention silently open.</p>
+</div>
+
+<section id="s1"><h2><span class="num">1</span>&#8220;Said done&#8221; is not &#8220;is done&#8221;</h2>
+<p>When an autonomous agent finishes acting, something must decide the task is complete. The default is an external verdict handed to the agent (a validator, a success flag, an acceptance-criteria checker) or, worse, the agent's own unaudited declaration. Both collapse a critical distinction: whether the <em>execution ran</em> versus whether the <em>goal now holds in the world</em>. An action can run to completion and return success while producing nothing: a blocked write, a copy from a missing source, a silently failing actuator. Any completion signal derived from &#8220;the code path finished&#8221; therefore measures the wrong thing.</p>
+<p>The reframing we defend is that completion is a <em>judgment about the state of the world</em>, and must be grounded in evidence about that state rather than in the fact that a procedure returned. We make that judgment a first-class, per-task belief that has to survive the agent's own doubt before the task is closed.</p>
+<blockquote class="key">A task is complete when the agent itself believes (past its own doubt) that the goal holds, where that belief is anchored to the goal's intent (so the agent cannot merely declare itself done) and formed from its own reasoning, fresh re-observation, and independent evidence.</blockquote>
+</section>
+
+<section id="s2"><h2><span class="num">2</span>Two kinds of evidence: DID and SAW</h2>
+<p>After acting, an agent can ask two epistemically different questions. <em>Did my intervention appear to produce the effect?</em> That is answered by the action runtime's own report of what it did (call this <span class="runin">DID</span>). And <em>is the world now actually in the state I intended?</em> That is answered by an independent, fresh re-measurement that does not reuse the action's cached result or any verdict derived from it (call this <span class="runin">SAW</span>). These are not redundant; they fail independently. A tool can truthfully report that it wrote a file (DID positive) while the file is absent (SAW negative); a tool can report failure (DID negative) while the intended state already holds. Treating the action's self-report as though it were an observation of the world is the core error, and completion must consult both channels while weighting fresh observation as a distinct source.</p>
+</section>
+
+<section id="s3"><h2><span class="num">3</span>Independent versus correlated evidence</h2>
+<p>Even when an agent gathers &#8220;multiple confirmations,&#8221; they are often the <em>same</em> observation flowing through different pipes: three tools that each read the same file are one measurement, not three. Counting correlated confirmations as independent manufactures overconfidence. A principled mechanism carries each datum's provenance and lets only genuinely independent pathways compound: evidence merely <em>derived</em> from other evidence (an aggregate &#8220;verified&#8221; verdict) is not counted at all, and correlated confirmations collapse to their strongest member. The practical consequence is visible in the calibration below: three same-source reads leave the posterior at roughly 0.72 (not enough) whereas one action report plus one <em>independent</em> observation crosses the bar.</p>
+</section>
+
+<section id="s4"><h2><span class="num">4</span>Completion as a belief that must pass its own doubt</h2>
+<p>We model completion as a loop over a per-task belief in the objective proposition <em>G</em> (&#8220;the goal holds&#8221;):</p>
+<ol>
+<li><span class="runin">Anchor.</span> From the task's intent, form <em>G</em>: the state conditions of a state goal, &#8220;the question is answered&#8221; for a knowledge task, or &#8220;the intended artifact exists&#8221; for a build task. The anchor is objective, so the agent cannot be done without <em>G</em> being the real target.</li>
+<li><span class="runin">Mint low.</span> The belief starts at a low prior (0.15), so a single positive report cannot read as done.</li>
+<li><span class="runin">Gather two channels.</span> Collect DID (the runtime's report) and SAW (a fresh, independent re-observation that does not consume the action's cached result).</li>
+<li><span class="runin">Independence check.</span> Drop derived aggregates; collapse correlated confirmations; compound only independent pathways.</li>
+<li><span class="runin">Intent polarity.</span> Score each datum against the goal's intended state, read from the operation (&#167;5).</li>
+<li><span class="runin">Decide by doubt.</span> Update the posterior; accept iff it clears the agent's standing confidence bar (0.95, raised toward 0.99 by caution). There is no bespoke completion threshold: completion reuses the same confidence band the agent applies to any belief, and that high bar is what forces the fresh independent observation.</li>
+</ol>
+<p>When the belief will not rise, the <em>reason</em> routes the response: missing evidence &#8594; try another method; an unreachable anchor &#8594; the plan was wrong; a blocker outside the agent &#8594; escalate. Each decision persists as experience, so the next similar task forms its judgment faster.</p>
+</section>
+
+<section id="s5"><h2><span class="num">5</span>Absence goals and intent polarity</h2>
+<p>A large, legitimate class of tasks defines success as an <em>absence</em>: remove the stale lock, ensure the cache is gone, the file no longer exists. A mechanism whose observation channel is hard-wired to check for <em>presence</em> structurally cannot confirm these; it reports <em>not done</em> on a goal that in fact holds. This is a conservative failure (it never over-claims) but it silently blocks all cleanup and teardown work. The fix is to give every piece of completion evidence the <em>polarity of the goal's intent</em>, read from the operation, so that &#8220;the target is gone&#8221; scores as support for a removal, and an action that &#8220;failed&#8221; only because the target was already absent counts as intent achieved.</p>
+</section>
+
+<section id="s6"><h2><span class="num">6</span>Results</h2>
+<p>All measurements below are of the mechanism's own behavior on a fixed world; see &#167;7 for an important scope limitation.</p>
+
+<h3>6.1&ensp;One confirmation is not enough</h3>
+<figure><div class="chart-title">Only independent action-plus-observation clears the bar</div><div class="canvas"><svg class="chart" viewBox="0 0 740 340" role="img">
+<line class="grid" x1="66" y1="294.0" x2="716" y2="294.0"/>
+<text class="tick" x="58" y="298.0" text-anchor="end">0</text>
+<line class="grid" x1="66" y1="238.4" x2="716" y2="238.4"/>
+<text class="tick" x="58" y="242.4" text-anchor="end">0.2</text>
+<line class="grid" x1="66" y1="182.8" x2="716" y2="182.8"/>
+<text class="tick" x="58" y="186.8" text-anchor="end">0.4</text>
+<line class="grid" x1="66" y1="127.2" x2="716" y2="127.2"/>
+<text class="tick" x="58" y="131.2" text-anchor="end">0.6</text>
+<line class="grid" x1="66" y1="71.6" x2="716" y2="71.6"/>
+<text class="tick" x="58" y="75.6" text-anchor="end">0.8</text>
+<line class="grid" x1="66" y1="16.0" x2="716" y2="16.0"/>
+<text class="tick" x="58" y="20.0" text-anchor="end">1</text>
+<line class="axis" x1="66" y1="294" x2="716" y2="294"/>
+<line x1="66" y1="29.9" x2="716" y2="29.9" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.85"/>
+<text x="712" y="24.9" text-anchor="end" style="font-size:11px;fill:var(--accent)">acceptance 0.95</text>
+<text class="axis-label" transform="rotate(-90 16 155)" x="16" y="155" text-anchor="middle">Completion posterior</text>
+<rect class="bar" x="106.6" y="93.8" width="81.2" height="200.2" rx="3" style="fill:var(--s5)"/>
+<text class="val" x="147.2" y="86.8" text-anchor="middle">0.72</text>
+<text class="tick" x="147.2" y="312" text-anchor="middle">Single</text>
+<text class="tick" x="147.2" y="325" text-anchor="middle">grounding</text>
+<rect class="bar" x="269.1" y="210.6" width="81.2" height="83.4" rx="3" style="fill:var(--s6)"/>
+<text class="val" x="309.8" y="203.6" text-anchor="middle">0.3</text>
+<text class="tick" x="309.8" y="312" text-anchor="middle">Fabricated</text>
+<text class="tick" x="309.8" y="325" text-anchor="middle">success</text>
+<rect class="bar" x="431.6" y="246.7" width="81.2" height="47.3" rx="3" style="fill:var(--s6)"/>
+<text class="val" x="472.2" y="239.7" text-anchor="middle">0.17</text>
+<text class="tick" x="472.2" y="312" text-anchor="middle">Reported done,</text>
+<text class="tick" x="472.2" y="325" text-anchor="middle">not observed</text>
+<rect class="bar" x="594.1" y="22.9" width="81.2" height="271.1" rx="3" style="fill:var(--s3)"/>
+<text class="val" x="634.8" y="15.9" text-anchor="middle">0.975</text>
+<text class="tick" x="634.8" y="312" text-anchor="middle">Acted +</text>
+<text class="tick" x="634.8" y="325" text-anchor="middle">independent</text>
+<text class="tick" x="634.8" y="338" text-anchor="middle">observation</text>
+</svg></div>
+<figcaption><span class="fnum">Figure 1.</span> Completion posterior for four evidence scenarios, against the acceptance bar (0.95). Three same-source reads collapse to one grounding (&#8776;0.72); a fabricated bare success (&#8776;0.30) and a case where the tool reports success but re-observation finds nothing (&#8776;0.17) stay well below the bar; only an action report plus an <em>independent</em> observation (&#8776;0.975) is accepted.</figcaption></figure>
+
+<h3>6.2&ensp;A completion-judgment suite</h3>
+<p>On a fixed suite of nine tasks (five honest actions, one absence goal, and three &#8220;traps&#8221; where a tool reports success without changing the world) the mechanism's posterior separates the two classes cleanly and matches ground truth on all nine.</p>
+<figure><div class="chart-title">Nine tasks: accepted completions vs. correctly rejected traps</div><div class="canvas"><svg class="chart" viewBox="0 0 760 350" role="img">
+<line class="grid" x1="66" y1="304.0" x2="736" y2="304.0"/>
+<text class="tick" x="58" y="308.0" text-anchor="end">0</text>
+<line class="grid" x1="66" y1="246.4" x2="736" y2="246.4"/>
+<text class="tick" x="58" y="250.4" text-anchor="end">0.2</text>
+<line class="grid" x1="66" y1="188.8" x2="736" y2="188.8"/>
+<text class="tick" x="58" y="192.8" text-anchor="end">0.4</text>
+<line class="grid" x1="66" y1="131.2" x2="736" y2="131.2"/>
+<text class="tick" x="58" y="135.2" text-anchor="end">0.6</text>
+<line class="grid" x1="66" y1="73.6" x2="736" y2="73.6"/>
+<text class="tick" x="58" y="77.6" text-anchor="end">0.8</text>
+<line class="grid" x1="66" y1="16.0" x2="736" y2="16.0"/>
+<text class="tick" x="58" y="20.0" text-anchor="end">1</text>
+<line class="axis" x1="66" y1="304" x2="736" y2="304"/>
+<line x1="66" y1="30.4" x2="736" y2="30.4" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.85"/>
+<text x="732" y="25.4" text-anchor="end" style="font-size:11px;fill:var(--accent)">acceptance 0.95</text>
+<text class="axis-label" transform="rotate(-90 16 160)" x="16" y="160" text-anchor="middle">Completion posterior</text>
+<rect class="bar" x="84.6" y="23.2" width="37.2" height="280.8" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="103.2" y="322" text-anchor="middle">write</text>
+<rect class="bar" x="159.1" y="23.2" width="37.2" height="280.8" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="177.7" y="322" text-anchor="middle">mkdir</text>
+<rect class="bar" x="233.5" y="23.2" width="37.2" height="280.8" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="252.1" y="322" text-anchor="middle">copy</text>
+<rect class="bar" x="307.9" y="16.0" width="37.2" height="288.0" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="326.6" y="322" text-anchor="middle">two-</text>
+<text class="tick" x="326.6" y="335" text-anchor="middle">step</text>
+<rect class="bar" x="382.4" y="23.2" width="37.2" height="280.8" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="401.0" y="322" text-anchor="middle">delete</text>
+<rect class="bar" x="456.8" y="23.2" width="37.2" height="280.8" rx="3" style="fill:var(--s3)"/>
+<text class="tick" x="475.4" y="322" text-anchor="middle">delete-</text>
+<text class="tick" x="475.4" y="335" text-anchor="middle">absent</text>
+<rect class="bar" x="531.3" y="303.7" width="37.2" height="0.3" rx="3" style="fill:var(--s6)"/>
+<text class="tick" x="549.9" y="322" text-anchor="middle">copy</text>
+<text class="tick" x="549.9" y="335" text-anchor="middle">(no src)</text>
+<rect class="bar" x="605.7" y="303.7" width="37.2" height="0.3" rx="3" style="fill:var(--s6)"/>
+<text class="tick" x="624.3" y="322" text-anchor="middle">write</text>
+<text class="tick" x="624.3" y="335" text-anchor="middle">(blocked)</text>
+<rect class="bar" x="680.2" y="248.6" width="37.2" height="55.4" rx="3" style="fill:var(--s6)"/>
+<text class="tick" x="698.8" y="322" text-anchor="middle">two-step</text>
+<text class="tick" x="698.8" y="335" text-anchor="middle">(2nd fails)</text>
+</svg></div>
+<figcaption><span class="fnum">Figure 2.</span> Per-task completion posterior. Green: tasks whose goal truly holds (accepted, &#8776;0.975&#8211;0.9999; the two-step task reaches the highest value from four independent groundings). Red: traps whose goal does not hold (rejected, &#8776;0.001&#8211;0.19). The dashed line is the acceptance bar. Summary: 6 correct completions, 3 correct rejections, <em>0 false completions, 0 false incompletions</em>.</figcaption></figure>
+<div class="tbl"><table>
+<caption><span class="fnum">Table 1.</span> The three traps and the absence edge case, with the posterior and the verdict. In every trap the action's self-report is positive or partially positive; independent re-observation is what produces the honest &#8220;not done.&#8221;</caption>
+<thead><tr><th>Task</th><th>Kind</th><th class="num">Posterior</th><th>Verdict</th></tr></thead>
+<tbody>
+<tr><td>Copy from a missing source</td><td>trap</td><td class="num">0.0011</td><td>not done &#10003;</td></tr>
+<tr><td>Write to a blocked path</td><td>trap</td><td class="num">0.0011</td><td>not done &#10003;</td></tr>
+<tr><td>Two-step, second step fails</td><td>trap</td><td class="num">0.192</td><td>not done &#10003;</td></tr>
+<tr><td>Delete a file already absent</td><td>absence</td><td class="num">0.975</td><td>done &#10003;</td></tr>
+</tbody></table></div>
+
+<h3>6.3&ensp;Absence goals under intent polarity</h3>
+<p>The absence case is what makes polarity load-bearing rather than cosmetic. With a presence-only observation channel, &#8220;ensure the file is gone&#8221; scored as a false incompletion. Giving the observation channel goal-polarity, and letting the action's real error (rather than a discarded generic one) inform the intervention evidence, moved the posterior from &#8776;0.01, through a partial fix at &#8776;0.17, to &#8776;0.975.</p>
+<figure><div class="chart-title">An absence goal, from false-incompletion to correct completion</div><div class="canvas"><svg class="chart" viewBox="0 0 740 330" role="img">
+<line class="grid" x1="66" y1="284.0" x2="716" y2="284.0"/>
+<text class="tick" x="58" y="288.0" text-anchor="end">0</text>
+<line class="grid" x1="66" y1="230.4" x2="716" y2="230.4"/>
+<text class="tick" x="58" y="234.4" text-anchor="end">0.2</text>
+<line class="grid" x1="66" y1="176.8" x2="716" y2="176.8"/>
+<text class="tick" x="58" y="180.8" text-anchor="end">0.4</text>
+<line class="grid" x1="66" y1="123.2" x2="716" y2="123.2"/>
+<text class="tick" x="58" y="127.2" text-anchor="end">0.6</text>
+<line class="grid" x1="66" y1="69.6" x2="716" y2="69.6"/>
+<text class="tick" x="58" y="73.6" text-anchor="end">0.8</text>
+<line class="grid" x1="66" y1="16.0" x2="716" y2="16.0"/>
+<text class="tick" x="58" y="20.0" text-anchor="end">1</text>
+<line class="axis" x1="66" y1="284" x2="716" y2="284"/>
+<line x1="66" y1="29.4" x2="716" y2="29.4" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.85"/>
+<text x="712" y="24.4" text-anchor="end" style="font-size:11px;fill:var(--accent)">acceptance 0.95</text>
+<text class="axis-label" transform="rotate(-90 16 150)" x="16" y="150" text-anchor="middle">Posterior for the absence goal</text>
+<text class="tick" x="66.0" y="302" text-anchor="middle">Presence-only</text>
+<text class="tick" x="391.0" y="302" text-anchor="middle">Partial polarity</text>
+<text class="tick" x="722.0" y="302" text-anchor="end">Goal-polarity</text>
+<polyline class="series-line" points="66.0,280.4 391.0,238.4 716.0,22.7" style="stroke:var(--s1)"/>
+<circle class="dot" cx="66.0" cy="280.4" r="3.4" style="fill:var(--s1)"/>
+<circle class="dot" cx="391.0" cy="238.4" r="3.4" style="fill:var(--s1)"/>
+<circle class="dot" cx="716.0" cy="22.7" r="3.4" style="fill:var(--s1)"/>
+</svg></div>
+<figcaption><span class="fnum">Figure 3.</span> Posterior for the &#8220;delete a file that is already absent&#8221; goal under three observation-channel conditions. Run-level accuracy on the suite rose from 87.5% (7/8, one false incompletion) to 100% (9/9); false incompletions fell from 1 to 0.</figcaption></figure>
+
+<p>The load-bearing result is structural rather than comparative: across every suite, including a &#8220;phantom actuator&#8221; tool that reports success while writing nothing, the mechanism recorded <em>zero false completions</em>, because its observation channel (a raw existence check) is independent of the tool it acted through. A completion cannot be accepted on the strength of the same channel that performed (or faked) the action.</p>
+</section>
+
+<section id="s7"><h2><span class="num">7</span>Who closes the pursuit, and from what</h2>
+<p>The mechanism above decides whether a goal holds. A second question decides what becomes of that judgment: which execution path records it against the task&#8217;s intent, and when. It matters for the same reason the judgment does. A pursuit that is never closed leaves the agent holding an intention it has in fact discharged, and a pursuit closed twice, by a step and again by the route that contains it, records one outcome as two. Either corrupts the record as surely as a false completion does.</p>
+<p>The rule we hold to is that the execution path which <em>owns</em> a pursuit closes its intent exactly once, from the re-observed world. Ownership is structural: a route owns the pursuit it formed, a step within that route owns nothing, and a standalone operation owns its own. Seven cases were run through the real dispatcher, not through a harness that calls the reconciliation stage directly, and all 27 checks passed on 18 September 2026 (Table&#160;2).</p>
+<div class="data-wrap"><table class="data">
+<thead><tr><th>Case</th><th>What it establishes</th></tr></thead>
+<tbody>
+<tr><td>A route of two steps</td><td>closes <em>once</em>, after both files have moved, as fulfilled</td></tr>
+<tr><td>A step inside that route</td><td>runs and confirms, and leaves the route&#8217;s intent open for its owner</td></tr>
+<tr><td>A standalone operation</td><td>closes its own intent as fulfilled, and returns the verdict with its result</td></tr>
+<tr><td>A standalone operation that acted on the wrong destination</td><td>the rule is <em>confirmed</em>, and the intent still closes as <em>missed</em></td></tr>
+<tr><td>A standalone operation that was refused</td><td>the pursuit still closes, as missed, with the refusal as the reason; nothing on disk changes</td></tr>
+<tr><td>A declared-tool operation</td><td>closes its own intent as fulfilled</td></tr>
+<tr><td>A declared-tool operation that is a step of a route</td><td>closes nothing</td></tr>
+</tbody>
+</table></div>
+<div style="font-size:.82em;color:var(--muted);margin-top:-.6em">Table 2. Seven ownership cases, every one dispatched the way production dispatches it. 27 of 27 checks passed.</div>
+<p>The fourth case is this paper&#8217;s thesis restated at the level of intent. The operation ran, and the rule that licensed it was confirmed: by every internal account the step succeeded. The file, however, was not where the goal said it should be, and the pursuit closed as missed. What decides the outcome is the re-observed world and not the step&#8217;s own account of itself, which is the same reason a tool&#8217;s success report cannot close a goal in &#167;6.</p>
+<p>The fifth case is the one most easily got wrong. An action that is refused before it runs has changed nothing, and it is tempting to treat the pursuit as never having begun. But the agent did form the intention, and an intention that is dropped silently is indistinguishable, later, from one that was never formed. The pursuit is therefore closed, as missed, carrying the refusal as its reason. Completion, incompletion and refusal are all outcomes the record must be able to state.</p>
+</section>
+
+<section id="status"><h2><span class="num">8</span>Implementation status</h2>
+<p>The polarity discipline described here is implemented and in service. Goal polarity is
+carried on the verification of each predicted effect: an addition is confirmed by the
+fact being present and contradicted by its absence, and a retraction is confirmed by the
+fact being <em>absent</em> and contradicted by its presence, with an unobservable world
+returning neither. Every result in &#167;6 is produced by that path, and the suite runs
+as part of the substrate's test set rather than as a one-off experiment.</p>
+<p>The measurements in this paper are therefore reported as the behavior of a live
+mechanism, not as a snapshot of work in progress. The three conditions in Figure 3 are
+retained deliberately: the &#8776;0.01 &#8594; &#8776;0.975 movement is the evidence that
+intent polarity is doing the work, and reporting only the final number would leave the
+claim unsupported.</p>
+</section>
+
+<section id="s7"><h2><span class="num">9</span>Limitations</h2>
+<p>An earlier internal evaluation compared this mechanism against a capable local language-model agent. We <em>withdraw</em> that comparison: the baseline had been handed the mechanism's own re-observation discipline and had task steps executed for it, so the comparison is contaminated and is not evidence about relative capability. We therefore make no claim of superiority over any model, and report only the mechanism's own behavior on a fixed world. The zero-false-completion result is demonstrated on a fixed filesystem suite; broader worlds, adversarial tools engineered to defeat the observation channel, and noisy or partial observations remain future work. The independence check enforced here is provenance-level (does this evidence share a causal lineage with that evidence); stronger statistical and adversarial notions of independence are open.</p>
+</section>
+
+<section id="s8"><h2><span class="num">10</span>Conclusion</h2>
+<p>Completion should be earned, not declared. By making it a per-task belief anchored to the goal's intent, formed from independent action and observation evidence, and accepted only past the agent's own doubt, an agent stops confusing &#8220;my code returned&#8221; with &#8220;the world changed.&#8221; The same discipline that keeps a single echo from reading as proof also lets the agent confirm an absence, know <em>why</em> it is not yet done, and turn each completion decision into experience.</p>
+</section>
+
+<hr class="sep">
+<section id="refs"><h2>References</h2>
+<ol class="refs">
+<li>G. Ryle. <em>The Concept of Mind</em>. Hutchinson, 1949. (Knowing-that vs. knowing-how.)</li>
+<li>J. Pearl. <em>Probabilistic Reasoning in Intelligent Systems</em>. Morgan Kaufmann, 1988.</li>
+<li>R. E. Fikes, N. J. Nilsson. STRIPS: a new approach to the application of theorem proving to problem solving. <em>Artificial Intelligence</em>, 2(3&#8211;4), 1971.</li>
+<li>L. Sha. Using simplicity to control complexity. <em>IEEE Software</em>, 18(4), 2001.</li>
+<li>R. El-Yaniv, Y. Wiener. On the foundations of noise-free selective classification. <em>JMLR</em>, 11, 2010.</li>
+</ol>
+</section>
+
+<div class="foot">Dominion Labs Research &#183; dmnlabs.org/research</div>
+</main>
+<footer class="paper-foot"><img src="assets/1.png" alt="Dominion Labs" width="96" height="92"><span>Dominion Labs</span></footer>
+</body>
+</html>
